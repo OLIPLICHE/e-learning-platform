@@ -6,9 +6,9 @@ class CreateCourses < ActiveRecord::Migration[6.1]
       t.text :description
       t.string :language
       t.string :level
-      t.int :price
-      t.datetime :date_start
-      t.datetime :date_end
+      t.integer :price
+      t.date :date_start
+      t.date :date_end
       t.string :city
       t.string :country
       t.string :picture

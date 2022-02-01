@@ -6,9 +6,9 @@ one:
   description: MyText
   language: MyString
   level: MyString
-  price: 
-  date_start: 2022-02-01 15:47:19
-  date_end: 2022-02-01 15:47:19
+  price: 1
+  date_start: 2022-02-01
+  date_end: 2022-02-01
   city: MyString
   country: MyString
   picture: MyString
@@ -20,9 +20,9 @@ two:
   description: MyText
   language: MyString
   level: MyString
-  price: 
-  date_start: 2022-02-01 15:47:19
-  date_end: 2022-02-01 15:47:19
+  price: 1
+  date_start: 2022-02-01
+  date_end: 2022-02-01
   city: MyString
   country: MyString
   picture: MyString
