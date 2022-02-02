@@ -5,8 +5,6 @@ class Api::V1::EnrolmentsController < ApplicationController
     @enrolments = current_user.enrolments.includes(:course)
   end
 
-  def show; end
-
   def create
     @enrolment = current_user.enrolments.new(enrolment_params)
 
