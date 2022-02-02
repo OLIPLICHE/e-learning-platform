@@ -1,0 +1,2 @@
+module EnrolmentsHelper
+end
