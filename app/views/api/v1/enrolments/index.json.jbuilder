@@ -1,4 +1,4 @@
-json.array! @enrolments do |enrolment|
+json.array! @enrolments do |_enrolment|
   json.id @enrolment.id
   json.rating @enrolment.rating
   json.review @enrolment.review
