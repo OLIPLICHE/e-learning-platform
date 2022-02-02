@@ -1,4 +1,4 @@
-class EnrolmentsController < ApplicationController
+class Api::V1::EnrolmentsController < ApplicationController
   before_action :set_enrolment, only: :destroy
 
   def index
