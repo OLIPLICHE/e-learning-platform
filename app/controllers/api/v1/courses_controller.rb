@@ -4,9 +4,7 @@ class Api::V1::CoursesController < ApplicationController
   def index
     @courses = current_user.courses.all
   end
-
-  def show; end
-
+  
   def create
     @course = current_user.courses.new(course_params)
 
