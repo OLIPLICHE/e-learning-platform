@@ -17,7 +17,7 @@ class Api::V1::EnrolmentsController < ApplicationController
 
   def destroy
     if @enrolment.destroy
-      render json: { message: "Enrolment has been successfully deleted" }
+      render json: { message: 'Enrolment has been successfully deleted' }
     else
       render json: @enrolment.errors, status: :unprocessable_entity
     end
