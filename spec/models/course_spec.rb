@@ -12,7 +12,22 @@ RSpec.describe Course, type: :model do
   end
 
   it 'should allow valid name' do
-    room.name = nil
-    expect(room).to_not be_valid
+    course.title = nil
+    expect(course).to_not be_valid
+  end
+
+  it 'should allow valid name' do
+    course.title = 'Ruby on rails'
+    expect(course).to be_valid
+  end
+
+  it 'should validate price' do
+    course.price = -5
+    expect(course).to_not be_valid
+  end
+
+  it 'should validate price' do
+    course.price = 10
+    expect(course).to be_valid
   end
 end
