@@ -16,7 +16,7 @@ RSpec.describe User, type: :model do
   end
 
   it 'should not be greater than 100' do
-    subject.name = 'Paka'*100
+    subject.name = 'Paka' * 100
     expect(subject).to_not be_valid
   end
 end
