@@ -75,7 +75,7 @@ RSpec.describe Course, type: :model do
       course.country = 'France'
       expect(course).to be_valid
     end
-    
+
     it 'should allow valid start date' do
       course.date_start = nil
       expect(course).to_not be_valid
