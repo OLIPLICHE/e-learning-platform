@@ -12,18 +12,18 @@ RSpec.describe Course, type: :model do
       it { expect(course).to be_valid }
     end
 
-    it 'should allow valid name' do
+    it 'should allow valid title' do
       course.title = nil
       expect(course).to_not be_valid
     end
 
-    it 'should allow valid name' do
+    it 'should allow valid title' do
       course.title = 'Ruby'
       expect(course).to be_valid
     end
 
-    it 'should allow valid name' do
-      course.name = 'Ruby' * 50
+    it 'should allow valid title' do
+      course.title = 'Ruby' * 50
       expect(course).to_not be_valid
     end
 
@@ -77,13 +77,23 @@ RSpec.describe Course, type: :model do
     end
     
     it 'should allow valid start date' do
-      enrolment.date_start = nil
-      expect(enrolment).to_not be_valid
+      course.date_start = nil
+      expect(course).to_not be_valid
     end
 
     it 'should allow valid start date' do
-      enrolment.date_start = '2022-11-3'
-      expect(enrolment).to be_valid
+      course.date_start = '2022-11-3'
+      expect(course).to be_valid
+    end
+
+    it 'should allow valid start date' do
+      course.date_start = nil
+      expect(course).to_not be_valid
+    end
+
+    it 'should allow valid start date' do
+      course.date_start = '2022-11-3'
+      expect(course).to be_valid
     end
   end
 end
