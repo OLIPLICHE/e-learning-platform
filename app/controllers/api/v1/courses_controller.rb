@@ -11,7 +11,7 @@ class Api::V1::CoursesController < ApplicationController
     @course = current_user.courses.new(course_params)
 
     if @course.save
-      render :show, status: :created, location: @course
+      render :create, status: :created
     else
       render json: @course.errors, status: :unprocessable_entity
     end
