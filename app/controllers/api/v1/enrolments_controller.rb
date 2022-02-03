@@ -11,7 +11,7 @@ class Api::V1::EnrolmentsController < ApplicationController
     @enrolment = current_user.enrolments.new(enrolment_params)
 
     if @enrolment.save
-      render :show, status: :created, location: @enrolment
+      render :create, status: :created
     else
       render json: @enrolment.errors, status: :unprocessable_entity
     end
