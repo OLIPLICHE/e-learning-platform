@@ -10,4 +10,9 @@ RSpec.describe Course, type: :model do
       it { expect(course).to be_valid }
     end
   end
+
+  it 'should allow valid name' do
+    room.name = nil
+    expect(room).to_not be_valid
+  end
 end
