@@ -1,4 +1,4 @@
-equire 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe Course, type: :model do
   let(:user) { User.create(name: 'Paka', email: 'example@mail.com', password: 'mypassword') }
