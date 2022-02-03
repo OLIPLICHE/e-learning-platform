@@ -4,7 +4,7 @@ RSpec.describe Course, type: :model do
   let(:user) { User.create(name: 'Paka', email: 'example@mail.com', password: 'mypassword') }
   let(:course) do
     Course.create(user_id: user.id, title: 'Ruby on Rails module', picture: 'logo.png', city: 'Yakro', country: 'France', short_description: 'lala lallal', description: 'Zoz zoz ozoz', language: 'french', level: 'Beginner',
-                  price: '100', date_start: '2015-01-9', date_end: '2015-01-10')
+                  price: '100', date_start: '2015-01-9', date_end: '2015-01-7')
   end
 
   describe 'Validations' do
@@ -74,6 +74,16 @@ RSpec.describe Course, type: :model do
     it 'should validate the course type' do
       course.country = 'France'
       expect(course).to be_valid
+    end
+    
+    it 'should allow valid start date' do
+      enrolment.date_start = nil
+      expect(enrolment).to_not be_valid
+    end
+
+    it 'should allow valid start date' do
+      enrolment.date_start = '2022-11-3'
+      expect(enrolment).to be_valid
     end
   end
 end
