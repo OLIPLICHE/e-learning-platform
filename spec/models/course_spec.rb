@@ -52,4 +52,19 @@ RSpec.describe Course, type: :model do
     course.picture = 'logo.png'
     expect(course).to be_valid
   end
+  
+  it 'should validate the city' do
+    course.city = nil
+    expect(course).to_not be_valid
+  end
+
+  it 'should validate the city' do
+    course.city = 'Yakro'
+    expect(course).to be_valid
+  end
+
+  it 'should validate the city' do
+    course.city = 'Yakro'*50
+    expect(course).to_not be_valid
+  end
 end
