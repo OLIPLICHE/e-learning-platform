@@ -1,16 +1,13 @@
-require 'rails_helper'
+equire 'rails_helper'
 
 RSpec.describe Course, type: :model do
-  subject do
-    described_class.new(title: 'Anything', description: 'Anything', short_description: 'Anything',
-                        city: 'Anything', picture: 'Anything', presence: 'true', length: 'anything')
-  end
+  let(:user) { User.create(name: 'Paka', email: 'example@mail.com', password: 'mypassword') }
+  let(:course) { Course.create(user_id: user.id, title: 'Ruby on Rails module', picture: 'logo.png', city: 'Yakto', country: 'France', short_description: 'lala lallal', description: 'Zoz zoz ozoz', language: 'french', level: 'Beginner',
+  price: '100', date_start: '2015-01-9', date_end: '2015-01-10') }
 
-  it 'is not valid without a title'
-  it 'is not valid without a description'
-  it 'is not valid without a short_description'
-  it 'is not valid without a length'
-  it 'is not valid without a city'
-  it 'is not valid without a picture'
-  it 'is not valid without a presence'
+  describe 'Validations' do
+    context 'when valid' do
+      it { expect(course).to be_valid }
+    end
+  end
 end
