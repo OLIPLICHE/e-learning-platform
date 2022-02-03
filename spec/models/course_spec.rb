@@ -1,4 +1,4 @@
-equire 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe Course, type: :model do
   let(:user) { User.create(name: 'Paka', email: 'example@mail.com', password: 'mypassword') }
@@ -75,7 +75,7 @@ RSpec.describe Course, type: :model do
       course.country = 'France'
       expect(course).to be_valid
     end
-
+    
     it 'should allow valid start date' do
       course.date_start = nil
       expect(course).to_not be_valid
