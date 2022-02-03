@@ -4,7 +4,7 @@ class Api::V1::CoursesController < ApplicationController
   def index
     @courses = current_user.courses.all
   end
-  
+
   def create
     @course = current_user.courses.new(course_params)
 
@@ -16,7 +16,11 @@ class Api::V1::CoursesController < ApplicationController
   end
 
   def destroy
-    @course.destroy
+        if @course.destroy
+      render json: { message: "Course has been successfully deleted" }
+    else
+      render json: @course.errors, status: :unprocessable_entity
+    end
   end
 
   private
