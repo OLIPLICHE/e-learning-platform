@@ -1,5 +1,5 @@
 class Api::V1::CoursesController < ApplicationController
-  before_action :set_course, only: [:destroy, :show]
+  before_action :set_course, only: %i[destroy show]
 
   def index
     @courses = current_user.courses.all
