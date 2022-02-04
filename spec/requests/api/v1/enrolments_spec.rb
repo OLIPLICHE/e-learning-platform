@@ -1,7 +1,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/enrolments', type: :request do
-  # rubocop: disable Metrics
   path '/api/v1/enrolments' do
     get('list enrolments') do
       tags 'Enrolments'
@@ -134,5 +133,4 @@ RSpec.describe 'api/v1/enrolments', type: :request do
       end
     end
   end
-  # rubocop: enable Metrics
 end
