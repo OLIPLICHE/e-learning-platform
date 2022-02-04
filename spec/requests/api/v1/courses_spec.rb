@@ -27,7 +27,7 @@ RSpec.describe 'api/v1/courses', type: :request do
       end
     end
 
-    post 'Creates a course' do
+    post 'create course' do
       tags 'courses'
       consumes 'application/json'
       security [bearer_auth: []]
@@ -56,7 +56,7 @@ RSpec.describe 'api/v1/courses', type: :request do
         run_test!
       end
 
-      response '201', 'create course' do
+      response '201', 'successfully authenticated' do
         let(:Authorization) { "Bearer #{::Base64.strict_encode64('admin@admin.com:2435647')}" }
         run_test!
       end
@@ -84,6 +84,7 @@ RSpec.describe 'api/v1/courses', type: :request do
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
     get('show course') do
+      tags 'Courses'
       response(200, 'successful') do
         let(:id) { '123' }
 
@@ -99,6 +100,7 @@ RSpec.describe 'api/v1/courses', type: :request do
     end
 
     delete('delete course') do
+      tags 'Courses'
       response(200, 'successful') do
         let(:id) { '123' }
 
