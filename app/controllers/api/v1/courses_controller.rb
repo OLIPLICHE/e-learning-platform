@@ -16,7 +16,11 @@ class Api::V1::CoursesController < ApplicationController
   end
 
   def destroy
-    @course.destroy
+    if @course.destroy
+      render json: { message: 'Course has been successfully deleted' }
+    else
+      render json: @course.errors, status: :unprocessable_entity
+    end
   end
 
   private

@@ -2,7 +2,7 @@ class Api::V1::EnrolmentsController < ApplicationController
   before_action :set_enrolment, only: :destroy
 
   def index
-    @enrolments = current_user.enrolments.includes(:course)
+    @enrolments = current_user.enrolments
   end
 
   def create
@@ -16,7 +16,11 @@ class Api::V1::EnrolmentsController < ApplicationController
   end
 
   def destroy
-    @enrolment.destroy
+    if @enrolment.destroy
+      render json: { message: 'Enrolment has been successfully deleted' }
+    else
+      render json: @enrolment.errors, status: :unprocessable_entity
+    end
   end
 
   private
@@ -26,6 +30,6 @@ class Api::V1::EnrolmentsController < ApplicationController
   end
 
   def enrolment_params
-    params.require(:enrolment).permit(:course_id)
+    params.require(:enrolment).permit(:rating, :review, :course_id)
   end
 end
