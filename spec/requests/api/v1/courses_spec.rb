@@ -1,8 +1,9 @@
 require 'swagger_helper'
-
 RSpec.describe 'api/v1/courses', type: :request do
+  # rubocop: disable Metrics
   path '/api/v1/courses' do
     get('list courses') do
+      tags 'Courses'
       security [bearer_auth: []]
 
       response(200, 'successful') do
@@ -28,7 +29,7 @@ RSpec.describe 'api/v1/courses', type: :request do
     end
 
     post 'create course' do
-      tags 'courses'
+      tags 'Courses'
       consumes 'application/json'
       security [bearer_auth: []]
       parameter name: :course, in: :body, schema: {
@@ -37,22 +38,22 @@ RSpec.describe 'api/v1/courses', type: :request do
           title: { type: :string },
           city: { type: :string },
           price: { type: :integer },
-          level: { type: :string },
           country: { type: :string },
+          level: { type: :string },
           picture: { type: :string }
         },
-        required: %w[title city price level country picture]
+        required: %w[title city price country level picture]
       }
 
       response '201', 'course created' do
         let(:course) do
-          { name: 'foo', city: 'rio', price: 23, level: 'basic', country: 'In-course games', picture: 'image.jpg' }
+          { title: 'rails', city: 'yakro', price: 100, country: 'france', level: 'Beginner', picture: 'image.jpg' }
         end
         run_test!
       end
 
       response '422', 'invalid request' do
-        let(:course) { { name: 'foo', city: 'rio', price: 23, country: 'In-course games', picture: 'image.jpg' } }
+        let(:course) { { title: 'rails', city: 'yakro', price: 100, level: 'Beginner', picture: 'image.jpg' } }
         run_test!
       end
 
@@ -85,6 +86,7 @@ RSpec.describe 'api/v1/courses', type: :request do
 
     get('show course') do
       tags 'Courses'
+      security [bearer_auth: []]
       response(200, 'successful') do
         let(:id) { '123' }
 
@@ -97,10 +99,20 @@ RSpec.describe 'api/v1/courses', type: :request do
         end
         run_test!
       end
+      response '201', 'successfully authenticated' do
+        let(:Authorization) { "Bearer #{::Base64.strict_encode64('admin@admin.com:2435647')}" }
+        run_test!
+      end
+
+      response '401', 'authentication failed' do
+        let(:Authorization) { "Bearer #{::Base64.strict_encode64('bogus:bogus')}" }
+        run_test!
+      end
     end
 
     delete('delete course') do
       tags 'Courses'
+      security [bearer_auth: []]
       response(200, 'successful') do
         let(:id) { '123' }
 
@@ -125,4 +137,5 @@ RSpec.describe 'api/v1/courses', type: :request do
       end
     end
   end
+  # rubocop: enable Metrics
 end
