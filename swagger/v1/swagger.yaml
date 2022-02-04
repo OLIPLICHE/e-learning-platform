@@ -10,7 +10,7 @@ components:
       scheme: bearer
       bearerFormat: JWT
 paths:
- "/api/v1/enrolments":
+  "/api/v1/enrolments":
     get:
       summary: list enrolments
       tags:
@@ -24,10 +24,10 @@ paths:
           description: Authorized
         '401':
           description: authentication failed
-           post:
+    post:
       summary: create enrolment
       tags:
-      - enrolments
+      - Enrolments
       security:
       - bearer_auth: []
       parameters: []
@@ -56,10 +56,44 @@ paths:
               - review
               - raiting
               - course_id
+  "/api/v1/enrolments/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show enrolment
+      tags:
+      - Enrolments
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+        '201':
+          description: successfully authenticated
+        '401':
+          description: authentication failed
+    delete:
+      summary: delete enrolment
+      tags:
+      - Enrolments
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+        '201':
+          description: delete enrolment
+        '401':
+          description: authentication failed
   "/api/v1/courses":
     get:
       summary: list courses
-            tags:
+      tags:
       - Courses
       security:
       - bearer_auth: []
@@ -67,13 +101,13 @@ paths:
         '200':
           description: successful
         '201':
-          description: Logged Out
+          description: Authorized
         '401':
           description: authentication failed
     post:
       summary: create course
       tags:
-      - courses
+      - Courses
       security:
       - bearer_auth: []
       parameters: []
@@ -121,13 +155,21 @@ paths:
       summary: show course
       tags:
       - Courses
+      security:
+      - bearer_auth: []
       responses:
         '200':
           description: successful
+        '201':
+          description: successfully authenticated
+        '401':
+          description: authentication failed
     delete:
       summary: delete course
       tags:
       - Courses
+      security:
+      - bearer_auth: []
       responses:
         '200':
           description: successful
@@ -199,7 +241,7 @@ paths:
         '200':
           description: successful
 servers:
-- url: http://{defaultHost}
+- url: https://{defaultHost}
   variables:
     defaultHost:
       default: localhost:3000
