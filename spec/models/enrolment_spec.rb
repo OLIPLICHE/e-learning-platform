@@ -7,7 +7,7 @@ RSpec.describe Enrolment, type: :model do
                   price: '100', date_start: '2015-01-9', date_end: '2015-01-7')
   end
   let(:enrolment) do
-    Enrolment.create(rating: '5', review: 'rrr bbbb', course_id: course.id, user_id: user.id)
+    Enrolment.create(raiting: '5', review: 'rrr bbbb', course_id: course.id, user_id: user.id)
   end
 
   describe 'Validations' do
@@ -15,18 +15,18 @@ RSpec.describe Enrolment, type: :model do
       it { expect(enrolment).to be_valid }
     end
 
-    it 'should allow valid rating' do
-      enrolment.rating = nil
+    it 'should allow valid raiting' do
+      enrolment.raiting = nil
       expect(enrolment).to_not be_valid
     end
 
-    it 'should allow valid rating' do
-      enrolment.rating = 8
+    it 'should allow valid raiting' do
+      enrolment.raiting = 8
       expect(enrolment).to be_valid
     end
 
-    it 'should allow valid rating' do
-      enrolment.rating = 0
+    it 'should allow valid raiting' do
+      enrolment.raiting = 0
       expect(enrolment).to be_valid
     end
 
