@@ -84,6 +84,6 @@ test:
 #
 production:
   <<: *default
-  database: <%= ENV['MY_APP_DATABASE_URL'] %>
+  database: <%= ENV['DATABASE_URL'] %>
   # username: e_learning_platform
   # password: <%= ENV['E_LEARNING_PLATFORM_DATABASE_PASSWORD'] %>
