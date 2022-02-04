@@ -6,12 +6,10 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module ELearningPlatform
+module LunarHotelBackend
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
-    config.active_storage.draw_routes = false
-
 
     # Configuration for the application, engines, and railties goes here.
     #
