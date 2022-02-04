@@ -24,6 +24,38 @@ paths:
           description: Authorized
         '401':
           description: authentication failed
+           post:
+      summary: create enrolment
+      tags:
+      - enrolments
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '201':
+          description: successfully authenticated
+        '422':
+          description: invalid request
+        '401':
+          description: authentication failed
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                review:
+                  type: text
+                raiting:
+                  type: integer
+                course_id:
+                  type: integer
+              required:
+              - review
+              - raiting
+              - course_id
   "/api/v1/courses":
     get:
       summary: list courses
