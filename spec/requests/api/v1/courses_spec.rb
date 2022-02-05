@@ -1,5 +1,6 @@
 require 'swagger_helper'
 RSpec.describe 'api/v1/courses', type: :request do
+  # rubocop: disable Metrics
   path '/api/v1/courses' do
     get('list courses') do
       tags 'Courses'
@@ -34,25 +35,25 @@ RSpec.describe 'api/v1/courses', type: :request do
       parameter name: :course, in: :body, schema: {
         type: :object,
         properties: {
-          name: { type: :string },
+          title: { type: :string },
           city: { type: :string },
-          rate: { type: :integer },
-          course_type: { type: :string },
-          amenities: { type: :string },
+          price: { type: :integer },
+          level: { type: :string },
+          country: { type: :string },
           picture: { type: :string }
         },
-        required: %w[name city rate course_type amenities picture]
+        required: %w[name city price level country picture]
       }
 
       response '201', 'course created' do
         let(:course) do
-          { name: 'foo', city: 'rio', rate: 23, course_type: 'basic', amenities: 'In-course games', picture: 'image.jpg' }
+          { title: 'Ruby', city: 'paris', price: 23, level: 'beginner', country: 'france', picture: 'logo.jpg' }
         end
         run_test!
       end
 
       response '422', 'invalid request' do
-        let(:course) { { name: 'foo', city: 'rio', rate: 23, amenities: 'In-course games', picture: 'image.jpg' } }
+        let(:course) { { title: 'Ruby', city: 'paris', price: 23, country: 'france', picture: 'logo.jpg' } }
         run_test!
       end
 
@@ -80,7 +81,6 @@ RSpec.describe 'api/v1/courses', type: :request do
   end
 
   path '/api/v1/courses/{id}' do
-    # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
     get('show course') do
@@ -136,4 +136,5 @@ RSpec.describe 'api/v1/courses', type: :request do
       end
     end
   end
+  # rubocop: enable Metrics
 end
