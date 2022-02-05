@@ -1,6 +1,7 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/enrolments', type: :request do
+  # rubocop: disable Metrics
   path '/api/v1/enrolments' do
     get('list enrolments') do
       tags 'Enrolments'
@@ -44,13 +45,13 @@ RSpec.describe 'api/v1/enrolments', type: :request do
 
       response '201', 'enrolment created' do
         let(:enrolment) do
-          { review: 'bla ba lala lol lolo', raiting: '5', course_id: 1 }
+          { review: 'bla lol bababa', raiting: '5', course_id: 1 }
         end
         run_test!
       end
 
       response '422', 'invalid request' do
-        let(:enrolment) { { review: 'bla ba lala lol lolo', raiting: '5' } }
+        let(:enrolment) { { review: 'bla lol bababa', raiting: '5' } }
         run_test!
       end
 
@@ -133,4 +134,5 @@ RSpec.describe 'api/v1/enrolments', type: :request do
       end
     end
   end
+  # rubocop: enable Metrics
 end
