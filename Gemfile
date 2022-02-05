@@ -41,8 +41,9 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'rspec-rails'
 end
+
+gem 'rspec-rails'
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
