@@ -1,8 +1,12 @@
 class Api::V1::CoursesController < ApplicationController
-  before_action :set_course, only: :destroy
+  before_action :set_course, only: %i[destroy show]
 
   def index
     @courses = current_user.courses.all
+  end
+
+  def show
+    render json: @course, status: :ok
   end
 
   def create

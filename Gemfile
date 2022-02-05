@@ -11,7 +11,7 @@ gem 'rubocop', '>= 1.0', '< 2.0'
 gem 'devise'
 gem 'devise-jwt'
 gem 'rack-cors'
-
+gem 'rswag'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.4'
 # Use postgresql as the database for Active Record
@@ -42,7 +42,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 5.0.0'
 end
 
 group :development do

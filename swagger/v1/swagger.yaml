@@ -1,0 +1,247 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  "/api/v1/enrolments":
+    get:
+      summary: list enrolments
+      tags:
+      - Enrolments
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+        '201':
+          description: Authorized
+        '401':
+          description: authentication failed
+    post:
+      summary: create enrolment
+      tags:
+      - Enrolments
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '201':
+          description: successfully authenticated
+        '422':
+          description: invalid request
+        '401':
+          description: authentication failed
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                review:
+                  type: text
+                raiting:
+                  type: integer
+                course_id:
+                  type: integer
+              required:
+              - review
+              - raiting
+              - course_id
+  "/api/v1/enrolments/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show enrolment
+      tags:
+      - Enrolments
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+        '201':
+          description: successfully authenticated
+        '401':
+          description: authentication failed
+    delete:
+      summary: delete enrolment
+      tags:
+      - Enrolments
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+        '201':
+          description: delete enrolment
+        '401':
+          description: authentication failed
+  "/api/v1/courses":
+    get:
+      summary: list courses
+      tags:
+      - Courses
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+        '201':
+          description: Authorized
+        '401':
+          description: authentication failed
+    post:
+      summary: create course
+      tags:
+      - Courses
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '201':
+          description: successful
+        '422':
+          description: invalid request
+        '401':
+          description: authentication failed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                city:
+                  type: string
+                price:
+                  type: integer
+                level:
+                  type: string
+                country:
+                  type: string
+                picture:
+                  type: string
+              required:
+              - title
+              - city
+              - price
+              - level
+              - country
+              - picture
+  "/api/v1/courses/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show course
+      tags:
+      - Courses
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+        '201':
+          description: successfully authenticated
+        '401':
+          description: authentication failed
+    delete:
+      summary: delete course
+      tags:
+      - Courses
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+        '201':
+          description: delete course
+        '401':
+          description: authentication failed
+  "/users/signup":
+    post:
+      summary: create registration
+      tags:
+      - User Registration
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - name
+              - email
+              - password
+  "/users/login":
+    post:
+      summary: create session
+      tags:
+      - Sessions
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+  "/users/logout":
+    delete:
+      summary: delete session
+      tags:
+      - Sessions
+      security:
+      - bearer_auth: []
+      responses:
+        '201':
+          description: Logged Out
+        '401':
+          description: authentication failed
+        '200':
+          description: successful
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
