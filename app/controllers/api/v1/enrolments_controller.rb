@@ -5,10 +5,6 @@ class Api::V1::EnrolmentsController < ApplicationController
     @enrolments = current_user.enrolments
   end
 
-  def show
-    render json: @enrolment, status: :ok
-  end
-
   def create
     @enrolment = current_user.enrolments.new(enrolment_params)
 
