@@ -1,5 +1,6 @@
 require 'swagger_helper'
 RSpec.describe 'api/v1/courses', type: :request do
+  # rubocop: disable Metrics
   path '/api/v1/courses' do
     get('list courses') do
       tags 'Courses'
@@ -34,25 +35,25 @@ RSpec.describe 'api/v1/courses', type: :request do
       parameter name: :course, in: :body, schema: {
         type: :object,
         properties: {
-          title: { type: :string },
+          name: { type: :string },
           city: { type: :string },
-          price: { type: :integer },
-          country: { type: :string },
-          level: { type: :string },
+          rate: { type: :integer },
+          course_type: { type: :string },
+          amenities: { type: :string },
           picture: { type: :string }
         },
-        required: %w[title city price country level picture]
+        required: %w[name city rate course_type amenities picture]
       }
 
       response '201', 'course created' do
         let(:course) do
-          { title: 'rails', city: 'yakro', price: 100, country: 'france', level: 'Beginner', picture: 'image.jpg' }
+          { name: 'foo', city: 'rio', rate: 23, course_type: 'basic', amenities: 'In-course games', picture: 'image.jpg' }
         end
         run_test!
       end
 
       response '422', 'invalid request' do
-        let(:course) { { title: 'rails', city: 'yakro', price: 100, level: 'Beginner', picture: 'image.jpg' } }
+        let(:course) { { name: 'foo', city: 'rio', rate: 23, amenities: 'In-course games', picture: 'image.jpg' } }
         run_test!
       end
 
@@ -136,4 +137,5 @@ RSpec.describe 'api/v1/courses', type: :request do
       end
     end
   end
+  # rubocop: enable Metrics
 end
