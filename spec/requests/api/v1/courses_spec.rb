@@ -1,77 +1,67 @@
 require 'swagger_helper'
+# rubocop:disable Metrics/BlockLength
 RSpec.describe 'api/v1/courses', type: :request do
+  let(:user) { create(:user) }
+  let(:Authorization) { "Bearer #{JWT.encode({ user_id: user[:id] }, 'HaNJLisLook1ng')}" }
+  let(:course) { create(:course, user_id: user[:id]) }
+  let(:course1) { create(:course, title: 'boo', user_id: user[:id]) }
+
   path '/api/v1/courses' do
     get('list courses') do
-      tags 'Courses'
-      security [bearer_auth: []]
-
+      consumes 'application/json'
+      produces 'application/json'
       response(200, 'successful') do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
+        run_test!
+      end
+    end
+
+    post('create course') do
+      consumes 'application/json'
+      produces 'application/json'
+      security [bearer_auth: []]
+      parameter name: :Authorization, in: :header, type: :string
+      parameter name: :data, in: :body, schema: {
+        type: :object,
+        properties: {
+          course: {
+            type: :object,
+            properties: {
+              title: { type: :string },
+              type: { type: :string },
+              image: { type: :string },
+              user_id: { type: :string }
+            },
+            required: %w[title type image user_id]
+          },
+          description: {
+            type: :object,
+            properties: {
+              price_daily: { type: :string },
+              price_monthly: { type: :string },
+              short_description: { type: :string }
+            },
+            required: %w[price_daily price_monthly short_description:]
+          }
+        },
+        required: %w[course description]
+      }
+
+      response(201, 'successful') do
+        let(:data) do
+          {
+            course: { title: 'smth', type: 'smth', image: 'smth', user_id: user[:id] },
+            description: { price_daily: '10', price_monthly: '300', short_description: '#000' }
           }
         end
         run_test!
       end
 
-      response '201', 'Authorized' do
-        let(:Authorization) { "Bearer #{::Base64.strict_encode64('admin@admin.com:2435647')}" }
-        run_test!
-      end
-
-      response '401', 'authentication failed' do
-        let(:Authorization) { "Bearer #{::Base64.strict_encode64('bogus:bogus')}" }
-        run_test!
-      end
-    end
-
-    post 'create course' do
-      tags 'Courses'
-      consumes 'application/json'
-      security [bearer_auth: []]
-      parameter name: :course, in: :body, schema: {
-        type: :object,
-        properties: {
-          title: { type: :string },
-          city: { type: :string },
-          price: { type: :integer },
-          level: { type: :string },
-          country: { type: :string },
-          picture: { type: :string }
-        },
-        required: %w[name city price level country picture]
-      }
-
-      response '201', 'course created' do
-        let(:course) do
-          { title: 'Ruby', city: 'paris', price: 23, level: 'beginner', country: 'france', picture: 'logo.jpg' }
-        end
-        run_test!
-      end
-
-      response '422', 'invalid request' do
-        let(:course) { { title: 'Ruby', city: 'paris', price: 23, country: 'france', picture: 'logo.jpg' } }
-        run_test!
-      end
-
-      response '201', 'successfully authenticated' do
-        let(:Authorization) { "Bearer #{::Base64.strict_encode64('admin@admin.com:2435647')}" }
-        run_test!
-      end
-
-      response '401', 'authentication failed' do
-        let(:Authorization) { "Bearer #{::Base64.strict_encode64('bogus:bogus')}" }
-        run_test!
-      end
-
-      response(201, 'successful') do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
+      response(401, 'unauthorized') do
+        let(:Authorization) { 'blablubasdjasdsa ' }
+        let(:data) do
+          {
+            course: { title: 'smth', type: 'smth', image: 'smth', user_id: user[:id] },
+            description: { price_daily: '10', price_monthly: '300', short_description: '#000' }
           }
         end
         run_test!
@@ -80,59 +70,28 @@ RSpec.describe 'api/v1/courses', type: :request do
   end
 
   path '/api/v1/courses/{id}' do
-    parameter name: 'id', in: :path, type: :string, description: 'id'
-
     get('show course') do
-      tags 'Courses'
+      consumes 'application/json'
       security [bearer_auth: []]
+      parameter name: :Authorization, in: :header, type: :string
+      parameter name: 'id', in: :path, type: :string, description: 'id'
       response(200, 'successful') do
-        let(:id) { '123' }
+        let(:id) { course[:id] }
 
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-      response '201', 'successfully authenticated' do
-        let(:Authorization) { "Bearer #{::Base64.strict_encode64('admin@admin.com:2435647')}" }
-        run_test!
-      end
-
-      response '401', 'authentication failed' do
-        let(:Authorization) { "Bearer #{::Base64.strict_encode64('bogus:bogus')}" }
         run_test!
       end
     end
 
     delete('delete course') do
-      tags 'Courses'
+      consumes 'application/json'
       security [bearer_auth: []]
+      parameter name: :Authorization, in: :header, type: :string
+      parameter name: 'id', in: :path, type: :string, description: 'id'
       response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-
-      response '201', 'delete course' do
-        let(:Authorization) { "Bearer #{::Base64.strict_encode64('admin@admin.com:2435647')}" }
-        run_test!
-      end
-
-      response '401', 'authentication failed' do
-        let(:Authorization) { "Bearer #{::Base64.strict_encode64('bogus:bogus')}" }
+        let(:id) { course[:id] }
         run_test!
       end
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
