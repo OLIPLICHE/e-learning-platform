@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# rubocop:disable Metrics/BlockLength
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
@@ -17,24 +17,25 @@ RSpec.configure do |config|
       openapi: '3.0.1',
       info: {
         title: 'API V1',
-        version: 'v1'
+        version: 'v1',
+        description: 'This is the first version of my API'
       },
       components: {
         securitySchemes: {
           bearer_auth: {
             type: :http,
             scheme: :bearer,
-            bearerFormat: JWT
+            bearerFormat: :JWT
           }
         }
       },
       paths: {},
       servers: [
         {
-          url: 'https://{defaultHost}',
+          url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: 'https://hanjelscars.herokuapp.com'
             }
           }
         }
@@ -48,3 +49,4 @@ RSpec.configure do |config|
   # Defaults to json. Accepts ':json' and ':yaml'.
   config.swagger_format = :yaml
 end
+# rubocop:enable Metrics/BlockLength
