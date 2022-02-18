@@ -1,40 +1,67 @@
 class Api::V1::CoursesController < ApplicationController
-  before_action :set_course, only: %i[destroy show]
+  before_action :set_course, only: %i[show destroy]
+  before_action :authorized, only: %i[show create destroy]
 
+  # GET /courses
   def index
-    @courses = current_user.courses.all
+    @courses = Course.all.includes(:description)
+
+    render json: @ccourses.to_json(include: [:description]), status: 200
   end
 
+  # GET /courses/1
   def show
-    render json: @course, status: :ok
-  end
-
-  def create
-    @course = current_user.courses.new(course_params)
-
-    if @course.save
-      render :create, status: :created
+    if @course
+      render json: @course.to_json(include: [:description]), status: :ok
     else
-      render json: @course.errors, status: :unprocessable_entity
+      render json: { error: 'course not found' }, status: 400
     end
   end
 
-  def destroy
-    if @course.destroy
-      render json: { message: 'Course has been successfully deleted' }
+  # POST /courses
+  def create
+    @course = Course.create(course_params.merge(user_id: @user.id))
+
+    if @course.valid?
+      @description = Description.create(description_params.merge(insurance_fee: 3, course_id: @course.id))
+      if @description.valid?
+        render json: @course.to_json(include: [:description]), status: :created
+      else
+        @course.destroy
+        render json: { error: @description.errors.full_messages }, status: 409
+      end
     else
-      render json: @course.errors, status: :unprocessable_entity
+      render json: { error: @course.errors.full_messages }, status: 409
+    end
+  end
+
+  # DELETE /courses/1
+  def destroy
+    if @course
+      @course.destroy
+      if @course.destroyed?
+        render json: { message: "course with id: #{params[:id]} successfully destroyed", id: params[:id] },
+               status: :ok
+      else
+        render json: { error: "course with id: #{params[:id]} cannot be destroyed" }, status: 400
+      end
+    else
+      render json: { error: 'course not found' }, status: 409
     end
   end
 
   private
 
   def set_course
-    @course = Course.find(params[:id])
+    @course = Course.find_by_id(params[:id])
   end
 
+  # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:title, :short_description, :description, :language, :country, :city, :level,
-                                   :price, :date_start, :date_end, :picture, :user_id)
+    params.require(:course).permit(:name, :brand, :imgUrl)
+  end
+
+  def description_params
+    params.require(:description).permit(:price_daily, :price_monthly, :short_description)
   end
 end
