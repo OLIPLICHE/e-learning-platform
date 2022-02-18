@@ -1,5 +1,5 @@
 class Api::V1::CoursesController < ApplicationController
-    before_action :set_course, only: %i[show destroy]
+  before_action :set_course, only: %i[show destroy]
   before_action :authorized, only: %i[show create destroy]
 
   # GET /courses
@@ -40,7 +40,8 @@ class Api::V1::CoursesController < ApplicationController
     if @course
       @course.destroy
       if @course.destroyed?
-        render json: { message: "course with id: #{params[:id]} successfully destroyed", id: params[:id] }, status: :ok
+        render json: { message: "course with id: #{params[:id]} successfully destroyed", id: params[:id] },
+               status: :ok
       else
         render json: { error: "course with id: #{params[:id]} cannot be destroyed" }, status: 400
       end
