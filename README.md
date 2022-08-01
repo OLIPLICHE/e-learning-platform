@@ -1,6 +1,6 @@
 # e-learning platform BACKEND
 
-This project is about creating API end point using Ruby on Rails. The API has courses and enrolment endpoints. The API also has authentication and authorization for the user.........
+This project is about creating API end point using Ruby on Rails. The API has courses and enrolment endpoints. The API also has authentication and authorization for the user......
 
 
 ## Built With
